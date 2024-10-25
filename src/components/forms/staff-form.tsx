@@ -3,7 +3,7 @@
 import { useAddressData } from "@/lib/address-selection";
 import { StaffValidators } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Department, Position, User } from "@prisma/client";
+import { Department, User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -20,11 +20,9 @@ import { useSaveStaff } from "@/data/staff";
 const StaffForm = ({
   initialData,
   department,
-  position,
 }: {
   initialData: User | null;
   department: Department[];
-  position: Position[];
 }) => {
   const router = useRouter();
   const title = initialData
@@ -47,7 +45,6 @@ const StaffForm = ({
           province: addressComponents.province ?? "",
           barangay: addressComponents?.barangay ?? "",
           departmentId: initialData?.departmentId ?? "",
-          positionId: initialData?.positionId ?? "",
         }
       : {
           firstName: "",
@@ -68,8 +65,7 @@ const StaffForm = ({
         },
   });
 
-  const { mutate: saveStaff, isPending: isLoading } =
-    useSaveStaff(initialData);
+  const { mutate: saveStaff, isPending: isLoading } = useSaveStaff(initialData);
 
   async function onSubmit(values: z.infer<typeof StaffValidators>) {
     saveStaff(values, {
@@ -139,8 +135,18 @@ const StaffForm = ({
             disabled={isLoading}
           />
           <CustomFormField
+            label="Password"
+            name="password"
+            placeholder="--------"
+            isRequired
+            type="password"
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            disabled={isLoading}
+          />
+          <CustomFormField
             label="Phone Number"
-            name="phoneNumber"
+            name="contactNumber"
             type="phone"
             fieldType={FormFieldType.PHONE_INPUT}
             control={form.control}
@@ -150,7 +156,7 @@ const StaffForm = ({
           <div className="grid md:grid-cols-2 grid-cols-1 gap-3">
             <CustomFormField
               label="Date of Birth"
-              name="birthDate"
+              name="birthdate"
               placeholder="dd/mm/yyyy"
               isRequired
               type="date"
@@ -160,7 +166,7 @@ const StaffForm = ({
             />
             <CustomFormField
               label="Sex"
-              name="gender"
+              name="sex"
               placeholder="Select your sex"
               isRequired
               fieldType={FormFieldType.SELECT}
@@ -190,7 +196,7 @@ const StaffForm = ({
               label: option,
               value: option,
             }))}
-            disabled
+            disabled={isLoading}
           />
           <CustomFormField
             label="Province"
@@ -203,7 +209,7 @@ const StaffForm = ({
               label: option,
               value: option,
             }))}
-            disabled
+            disabled={isLoading || !selectedRegionName}
           />
           <div className="grid md:grid-cols-2 grid-cols-1 gap-3">
             <CustomFormField
@@ -217,7 +223,7 @@ const StaffForm = ({
                 label: option,
                 value: option,
               }))}
-              disabled={isLoading}
+              disabled={isLoading || !selectedProvinceName}
             />
             <CustomFormField
               label="Barangay"
@@ -254,18 +260,15 @@ const StaffForm = ({
               isRequired
               fieldType={FormFieldType.SELECT}
               control={form.control}
-              dynamicOptions={position.map((option) => ({
-                label: option.name,
-                value: option.id,
-              }))}
+              options={["System Admin", "Worker", "Office Staff", "Secretary"]}
               disabled={isLoading}
             />
-            <Button type="submit" disabled={isLoading}>
-              {isLoading && <Loader2 className="w-5 h-5 animate-spin mr-2" />}
-              {action}
-            </Button>
           </div>
         </div>
+        <Button type="submit" className="mt-3" disabled={isLoading}>
+          {isLoading && <Loader2 className="w-5 h-5 animate-spin mr-2" />}
+          {action}
+        </Button>
       </form>
     </Form>
   );

@@ -15,15 +15,9 @@ const StaffPage = async ({ params }: { params: { staffId: string } }) => {
     }
   })
 
-  const position = await db.position.findMany({
-    orderBy: {
-      name: "asc"
-    }
-  })
-
   return (
     <div className="px-5 flex-1 space-y-4">
-      <StaffForm initialData={staff} department={department} position={position} />
+      <StaffForm initialData={staff} department={department} />
     </div>
   );
 };

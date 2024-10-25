@@ -24,15 +24,6 @@ model Department {
   user        User[]
 }
 
-model Position {
-  id          String   @id @unique
-  name        String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  user        User[]
-}
-
 model User {
   id            String   @id @unique
   firstName     String
@@ -44,12 +35,10 @@ model User {
   address       String
   email         String   @unique
   password      String
+  position      String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   departmentId String
   department   Department @relation(fields: [departmentId], references: [id])
-
-  positionId String
-  position   Position @relation(fields: [positionId], references: [id])
 }

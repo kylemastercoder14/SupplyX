@@ -13,7 +13,6 @@ export const getAllStaff = async () => {
       },
       include: {
         department: true,
-        position: true,
       },
     });
 
@@ -76,7 +75,7 @@ export const createStaff = async (values: z.infer<typeof StaffValidators>) => {
         email,
         password,
         departmentId,
-        positionId,
+        position: positionId,
       },
     });
 
@@ -120,7 +119,7 @@ export const updateStaff = async (
     region,
     sex,
   } = validatedField.data;
-  
+
   const address = `${houseNumber}, ${barangay}, ${municipality}, ${province}, ${region}`;
 
   try {
@@ -139,16 +138,14 @@ export const updateStaff = async (
         email,
         password,
         departmentId,
-        positionId,
+        position: positionId,
       },
     });
 
     return { success: "Staff updated successfully", data };
   } catch (error: any) {
     return {
-      error: `Failed to update staff. Please try again. ${
-        error.message || ""
-      }`,
+      error: `Failed to update staff. Please try again. ${error.message || ""}`,
     };
   }
 };
@@ -168,9 +165,7 @@ export const deleteStaff = async (staffId: string) => {
     return { success: "Staff deleted successfully", data };
   } catch (error: any) {
     return {
-      error: `Failed to delete staff. Please try again. ${
-        error.message || ""
-      }`,
+      error: `Failed to delete staff. Please try again. ${error.message || ""}`,
     };
   }
 };

@@ -30,7 +30,7 @@ const StaffClient = () => {
       birthdate: format(item.birthdate, "MMMM dd, yyyy"),
       contactNumber: item.contactNumber,
       department: item.department.name,
-      position: item.position.name,
+      position: item.position,
       email: item.email,
       createdAt: format(item.createdAt, "MMMM dd, yyyy"),
     })) || [];

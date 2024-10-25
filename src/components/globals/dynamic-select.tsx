@@ -44,22 +44,31 @@ export const DynamicSelect = ({
       <CreatableSelect
         isMulti={false}
         placeholder={placeholder}
-        className="text-sm bg-white w-full"
+        className="w-full"
         styles={{
           control: (base) => ({
             ...base,
             borderColor: isFocused
               ? theme === "dark"
-                ? "#333"
-                : "#ed8712" // Border color when focused
+                ? "#111"
+                : "#111"
               : theme === "dark"
               ? "#111"
               : "#e2e8f0",
-            backgroundColor: theme === "dark" ? "#111" : "#fff",
-            boxShadow: isFocused ? "0 0 0 1px #ed8712" : "none", // Add shadow on focus
+            backgroundColor: theme === "dark" ? "#111" : "#111",
+            boxShadow: isFocused ? "0 0 0 1px #111" : "none",
             ":hover": {
-              borderColor: theme === "dark" ? "#333" : "#ed8712",
+              borderColor: theme === "dark" ? "#111" : "#111",
             },
+            "::placeholder": {
+              color: theme === "dark" ? "#fff" : "#fff",
+            },
+            color: theme === "dark" ? "#fff" : "#fff",
+          }),
+          option: (styles, { isFocused }) => ({
+            ...styles,
+            backgroundColor: isFocused ? "#111" : "#111",
+            color: isFocused ? "#fff" : theme === "dark" ? "#fff" : "#fff",
           }),
         }}
         value={formattedValue}

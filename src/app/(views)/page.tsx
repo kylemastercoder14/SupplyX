@@ -1,11 +1,15 @@
+"use client";
+
 import Container from "@/components/globals/container";
 import { AnimatedTooltip } from "@/components/magic-ui/animated-tooltip";
 import DotPattern from "@/components/magic-ui/dot-patter";
 import ShimmerButton from "@/components/magic-ui/shimmer-button";
 import { GROUP_ICONS } from "@/constants";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <>
       <div className="relative flex h-screen w-full flex-col px-40 py-40 overflow-hidden bg-background">
@@ -25,7 +29,7 @@ export default function Home() {
               Browse &rarr;
             </span>
           </ShimmerButton>
-          <button className="px-8 py-3.5 rounded-[10px] bg-gradient-to-b from-orange-600 to-orange-800 text-white focus:ring-2 focus:ring-orange-600 hover:shadow-xl transition duration-200">
+          <button onClick={() => router.push("/auth")} className="px-8 py-3.5 rounded-[10px] bg-gradient-to-b from-orange-600 to-orange-800 text-white focus:ring-2 focus:ring-orange-600 hover:shadow-xl transition duration-200">
             Get Started For Free
           </button>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, Home, Users, type LucideIcon } from "lucide-react";
+import { ChevronRight, Home, type LucideIcon } from "lucide-react";
 
 import {
   Collapsible,
@@ -42,16 +42,6 @@ export function NavMain({
               <a href="/overview">
                 <Home />
                 <span>Dashboard</span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Manage Users">
-              <a href="/manage-users">
-                <Users />
-                <span>Manage Users</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

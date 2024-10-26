@@ -22,6 +22,8 @@ model Department {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   user        User[]
+
+  logs Logs[]
 }
 
 model User {
@@ -38,6 +40,113 @@ model User {
   position      String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+}
+
+model Warehouse {
+  id          String   @id @unique
+  name        String
+  description String?
+  address     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rawMaterial RawMaterial[]
+}
+
+model RawMaterial {
+  id        String   @id @unique
+  name      String
+  imageUrl  String
+  unit      String
+  stock     Int
+  buffer    Int?
+  used      Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  warehouseId String
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+
+  procurement        Procurement? // Relation to the procurement inventory
+  delivery           Delivery[]
+  productionMaterial ProductionMaterial[]
+}
+
+model Delivery {
+  id           String    @id @unique
+  dateReceived DateTime  @default(now())
+  dateSent     DateTime?
+  status       String // e.g., "Pending", "Delivered"
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  rawMaterialId String
+  rawMaterial   RawMaterial  @relation(fields: [rawMaterialId], references: [id])
+  procurement   Procurement? // Linked to procurement records
+}
+
+model Procurement {
+  id               String   @id @unique
+  quantityReceived Int
+  status           String // e.g., "In Stock", "Checked"
+  deliveryId       String   @unique
+  delivery         Delivery @relation(fields: [deliveryId], references: [id])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  productionMaterialId String?
+  productionMaterial   ProductionMaterial? @relation(fields: [productionMaterialId], references: [id])
+  rawMaterialId        String              @unique
+  rawMaterial          RawMaterial         @relation(fields: [rawMaterialId], references: [id])
+}
+
+model ProductionMaterial {
+  id        String   @id @unique
+  quantity  Int // Quantity after production
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rawMaterialId String
+  rawMaterial   RawMaterial   @relation(fields: [rawMaterialId], references: [id])
+  finishedGood  FinishedGood? // Linked to finished goods inventory
+  procurement   Procurement[]
+}
+
+model FinishedGood {
+  id          String   @id @unique
+  name        String
+  imageUrl    String
+  description String?
+  price       Float
+  stock       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  productionMaterialId String             @unique
+  productionMaterial   ProductionMaterial @relation(fields: [productionMaterialId], references: [id])
+  sales                Sale[] // Relation to sales for tracking customer orders
+}
+
+model Sale {
+  id     String @id @unique
+  status String
+
+  quantitySold Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  finishedGoodId String
+  finishedGood   FinishedGood @relation(fields: [finishedGoodId], references: [id])
+}
+
+model Logs {
+  id        String   @id @unique
+  action    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   departmentId String
   department   Department @relation(fields: [departmentId], references: [id])

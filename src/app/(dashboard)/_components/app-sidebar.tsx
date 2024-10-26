@@ -1,12 +1,21 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
-  Frame,
-  Map,
-  PieChart,
+  Armchair,
+  BookCheck,
+  Calculator,
+  Cpu,
+  LayoutList,
+  PaintBucket,
+  PhilippinePeso,
+  PlusCircle,
+  SendHorizontal,
   Settings,
-} from "lucide-react"
+  Truck,
+  Wallet,
+  Warehouse,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -14,11 +23,11 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { TeamSwitcher } from "./team-switcher"
-import { NavMain } from "./nav-main"
-import { NavProjects } from "./nav-projects"
-import { NavUser } from "./nav-user"
+} from "@/components/ui/sidebar";
+import { TeamSwitcher } from "./team-switcher";
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
 
 const data = {
   user: {
@@ -45,22 +54,107 @@ const data = {
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Supplier",
       url: "#",
-      icon: Frame,
+      icon: Warehouse,
+      items: [
+        {
+          name: "Add Warehouse",
+          url: "/supplier/add-warehouse",
+          icon: PlusCircle,
+        },
+        {
+          name: "Add Raw Materials",
+          url: "/supplier/add-raw-materials",
+          icon: PaintBucket,
+        },
+        {
+          name: "Send Delivery Request",
+          url: "/supplier/send-delivery-request",
+          icon: SendHorizontal,
+        },
+      ],
     },
     {
-      name: "Sales & Marketing",
+      name: "Delivery",
       url: "#",
-      icon: PieChart,
+      icon: Truck,
+      items: [
+        {
+          name: "Receive Raw Materials",
+          url: "/delivery/receive-raw-materials",
+          icon: Armchair,
+        },
+        {
+          name: "Inventory",
+          url: "/delivery/inventory",
+          icon: Calculator,
+        },
+      ],
     },
     {
-      name: "Travel",
+      name: "Procurement",
       url: "#",
-      icon: Map,
+      icon: LayoutList,
+      items: [
+        {
+          name: "Receive Raw Materials",
+          url: "/procurement/receive-raw-materials",
+          icon: Armchair,
+        },
+        {
+          name: "Send Raw Materials",
+          url: "/procurement/send-raw-materials",
+          icon: SendHorizontal,
+        },
+        {
+          name: "Inventory",
+          url: "/procurement/inventory",
+          icon: Calculator,
+        },
+      ],
+    },
+    {
+      name: "Production",
+      url: "#",
+      icon: Cpu,
+      items: [
+        {
+          name: "Process Raw Materials",
+          url: "/production/process-raw-materials",
+          icon: Armchair,
+        },
+        {
+          name: "Inventory",
+          url: "/production/inventory",
+          icon: Calculator,
+        },
+      ],
+    },
+    {
+      name: "Sales",
+      url: "#",
+      icon: Wallet,
+      items: [
+        {
+          name: "View Finished Goods",
+          url: "/sales/view-finished-goods",
+          icon: BookCheck,
+        },
+        {
+          name: "Manage Orders",
+          url: "/sales/manage-orders",
+          icon: PhilippinePeso,
+        },
+        {
+          name: "Inventory",
+          url: "/sales/inventory",
+          icon: Calculator,
+        },
+      ],
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -77,5 +171,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

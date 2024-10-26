@@ -22,3 +22,19 @@ export const StaffValidators = z.object({
   departmentId: z.string().min(1, "Department is required."),
   positionId: z.string().min(1, "Position is required."),
 });
+
+export const WarehouseValidators = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  address: z.string().min(1, { message: "Address is required" }),
+  description: z.string().optional(),
+});
+
+export const RawMaterialValidators = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  unit: z.string().min(1, { message: "Unit is required" }),
+  imageUrl: z.string().min(1, { message: "Image is required" }),
+  warehouseId: z.string().min(1, { message: "Warehouse is required" }),
+  stock: z.coerce.number().min(1, { message: "Stock is required" }),
+  buffer: z.coerce.number().optional(),
+});
+

@@ -77,7 +77,8 @@ model RawMaterial {
 
 model Delivery {
   id           String    @id @unique
-  dateReceived DateTime  @default(now())
+  quantity     Int
+  dateReceived DateTime?
   dateSent     DateTime?
   status       String // e.g., "Pending", "Delivered"
   createdAt    DateTime  @default(now())

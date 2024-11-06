@@ -66,6 +66,7 @@ interface CustomProps {
   renderedValue?: string | string[];
   onCreate?: (value: string) => void;
   renderSkeleton?: (field: any) => React.ReactNode;
+  onChange?: (value: any) => void;
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
@@ -81,6 +82,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     autoFocus,
     renderedValue,
     onCreate,
+    onChange,
   } = props;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -204,7 +206,10 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       return (
         <FormControl>
           <Select
-            onValueChange={field.onChange}
+            onValueChange={(value) => {
+              field.onChange(value);
+              onChange?.({ target: { value } }); // Call onChange only if it's defined
+            }}
             value={field.value || renderedValue}
           >
             <SelectTrigger

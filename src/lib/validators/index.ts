@@ -38,3 +38,13 @@ export const RawMaterialValidators = z.object({
   buffer: z.coerce.number().optional(),
 });
 
+export const DeliveryRequestValidators = (maxStock: number) =>
+  z.object({
+    rawMaterialId: z.string().min(1, { message: "Raw material is required" }),
+    quantity: z.coerce
+      .number()
+      .min(1, { message: "Quantity must be at least 1" })
+      .refine((val) => val <= maxStock, {
+        message: `Quantity cannot exceed available stock of ${maxStock}`,
+      }),
+  });
